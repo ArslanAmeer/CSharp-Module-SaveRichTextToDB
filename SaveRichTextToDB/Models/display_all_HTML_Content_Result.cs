@@ -10,9 +10,8 @@
 namespace SaveRichTextToDB.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tbl_html_info
+    public partial class display_all_HTML_Content_Result
     {
         public int id { get; set; }
         public string html_content { get; set; }

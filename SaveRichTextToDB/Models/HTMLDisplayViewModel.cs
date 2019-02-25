@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace SaveRichTextToDB.Models
 {
-    public class RichText
+    public class HTMLDisplayViewModel
     {
         /// <summary>
         /// Gets or sets the HTML content property.
@@ -32,6 +32,6 @@ namespace SaveRichTextToDB.Models
         /// <summary>
         /// Gets or sets list property.
         /// </summary>
-        public List<tbl_html_info> HTMLContentList { get; set; }
+        public List<display_all_HTML_Content_Result> HTMLContentList { get; set; }
     }
 }
