@@ -9,23 +9,8 @@ namespace SaveRichTextToDB.Controllers
 {
     public class HomeController : Controller
     {
-        #region Private Property
-
-        /// <summary>
-        /// Gets or sets database manager property.
-        /// </summary>
         private db_htmlEntities1 databaseManager = new db_htmlEntities1();
 
-        #endregion
-
-        #region Index view method.
-
-        #region Get: /HTMLDisplay/Index method.
-
-        /// <summary>
-        /// Get: /HTMLDisplay/Index method.
-        /// </summary>        
-        /// <returns>Return index view</returns>
         public ActionResult Index()
         {
             // Initialization/
@@ -46,15 +31,6 @@ namespace SaveRichTextToDB.Controllers
             return this.View(model);
         }
 
-        #endregion
-
-        #region POST: /HTMLDisplay/Index
-
-        /// <summary>
-        /// POST: /HTMLDisplay/Index
-        /// </summary>
-        /// <param name="model">Model parameter</param>
-        /// <returns>Return - Response information</returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -62,16 +38,12 @@ namespace SaveRichTextToDB.Controllers
         {
             try
             {
-                // Verification
                 if (ModelState.IsValid)
                 {
-                    // save info.
                     this.databaseManager.Insert_HTML_Content(model.HtmlContent);
 
-                    // Commit database.
                     this.databaseManager.SaveChanges();
 
-                    // Settings.
                     model.HTMLContentList = this.databaseManager.display_all_HTML_Content().ToList();
                     model.Message = "Information successfully!! saved.";
                     model.IsValid = true;
@@ -89,16 +61,10 @@ namespace SaveRichTextToDB.Controllers
             }
             catch (Exception ex)
             {
-                // Info
                 Console.Write(ex);
             }
 
-            // Info
-            return this.View(model);
+            return View(model);
         }
-
-        #endregion
-
-        #endregion
     }
 }
