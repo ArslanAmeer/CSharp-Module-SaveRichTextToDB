@@ -1,123 +1,114 @@
 ﻿@model SaveRichTextToDB.Models.HTMLDisplayViewModel
 
-    @{
-        ViewBag.Title = "Index";
-    }
+@{
+    ViewBag.Title = "Index";
+}
 
-    <h2>Index</h2>
-
-    <div class="row">
-        <div class="panel-heading">
-            <div class="col-md-8">
-                <h3>
-                    <i class="fa fa-file-text-o"></i>
-                    <span>ASP.NET MVC5: Save and Display HTML content</span>
-                </h3>
-            </div>
+<div class="row">
+    <div class="panel-heading">
+        <div class="col-md-8">
+            <h3>
+                <i class="fa fa-file-text-o"></i>
+                <span>CSharp-Module-SaveRichTextToDB</span>
+            </h3>
         </div>
     </div>
+</div>
 
-    <br />
+<br />
 
+<div class="row">
+    <div class="col-md-12">
+        <section>
+            @using (Html.BeginForm("Index", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <hr />
+                <div class="form-group">
+                    <label class="col-md-4 control-label">HTML Contnet </label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            @Html.TextAreaFor(m => m.HtmlContent, new { rows = "20", style = "resize:none;width:400px;", placeholder = Html.DisplayNameFor(m => m.HtmlContent), @class = "form-control input-lg textarea-editor" })
+                        </div>
+                        @if (Model.IsValid && !string.IsNullOrEmpty(Model.Message))
+                        {
+                            <span class="text-success">@Model.Message</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">@Model.Message</span>
+                            @Html.ValidationMessageFor(m => m.HtmlContent, "", new { @class = "text-danger" })
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10 col-md-push-4">
+                        <input type="submit" value="Save" class="btn btn-info" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+<hr />
+
+@if (Model.HTMLContentList != null &&
+                 Model.HTMLContentList.Count > 0)
+{
     <div class="row">
-        <div class="col-md-12">
-            <section>
-                @using (Html.BeginForm("Index", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-
-                    <h5>
-                        <i class="fa fa-link" aria-hidden="true"></i>
-                        <a href="http://summernote.org/">Summernote Rich Text WYSIWYG Editor</a>
-                    </h5>
-
-                    <hr />
-
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">HTML Contnet </label>
-                        <div class="col-md-8">
-                            <div class="input-group">
-                                @Html.TextAreaFor(m => m.HtmlContent, new { rows = "20", style = "resize:none;width:400px;", placeholder = Html.DisplayNameFor(m => m.HtmlContent), @class = "form-control input-lg textarea-editor" })
-                            </div>
-                            @if (Model.IsValid && !string.IsNullOrEmpty(Model.Message))
-                            {
-                                <span class="text-success">@Model.Message</span>
-                            }
-                            else
-                            {
-                                <span class="text-danger">@Model.Message</span>
-                                @Html.ValidationMessageFor(m => m.HtmlContent, "", new { @class = "text-danger" })
-                            }
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-10 col-md-push-4">
-                            <input type="submit" value="Save" class="btn btn-info" />
-                        </div>
-                    </div>
-                }
-            </section>
+        <div class="col-md-offset-4 col-md-8">
+            <h3>List of HTML Content </h3>
         </div>
     </div>
 
     <hr />
 
-    @if (Model.HTMLContentList != null &&
-                     Model.HTMLContentList.Count > 0)
-    {
-        <div class="row">
-            <div class="col-md-offset-4 col-md-8">
-                <h3>List of HTML Content </h3>
-            </div>
-        </div>
+    <div class="row">
+        <div class="col-md-offset-1 col-md-8">
+            <section>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">Sr.</th>
+                            <th style="text-align: center;">HTML Content</th>
+                        </tr>
+                    </thead>
 
-        <hr />
-
-        <div class="row">
-            <div class="col-md-offset-1 col-md-8">
-                <section>
-                    <table class="table table-bordered table-striped">
-                        <thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.HTMLContentList.Count; i++)
+                        {
                             <tr>
-                                <th style="text-align: center;">Sr.</th>
-                                <th style="text-align: center;">HTML Content</th>
+                                <td style="text-align: center;">@(i + 1)</td>
+
+                                <td style="text-align: center;">
+                                    <div class="input-group">
+                                        @Html.Raw(Model.HTMLContentList[i].html_content)
+                                    </div>
+                                </td>
                             </tr>
-                        </thead>
-
-                        <tbody>
-                            @for (int i = 0; i < Model.HTMLContentList.Count; i++)
-                            {
-                                <tr>
-                                    <td style="text-align: center;">@(i + 1)</td>
-
-                                    <td style="text-align: center;">
-                                        <div class="input-group">
-                                            @Html.Raw(Model.HTMLContentList[i].html_content)
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </section>
-            </div>
+                        }
+                    </tbody>
+                </table>
+            </section>
         </div>
-    }
+    </div>
+}
 
-    @section Scripts
+@section Scripts
 {
-        <script type="text/javascript">
-            $(document).ready(function () {
-                // Initialize Editor
-                //$('.textarea-editor').wysihtml5();
-                $('.textarea-editor').summernote(
-                    {
-                        height: 300,                 // set editor height
-                        minHeight: null,             // set minimum height of editor
-                        maxHeight: null,             // set maximum height of editor
-                        focus: true                  // set focus to editable area after initializing summernote
-                    });
-            });
-        </script>
-    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Initialize Editor
+            //$('.textarea-editor').wysihtml5();
+            $('.textarea-editor').summernote(
+                {
+                    height: 300,                 // set editor height
+                    minHeight: null,             // set minimum height of editor
+                    maxHeight: null,             // set maximum height of editor
+                    focus: true                  // set focus to editable area after initializing summernote
+                });
+        });
+    </script>
+}
