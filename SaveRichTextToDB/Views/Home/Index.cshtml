@@ -84,6 +84,7 @@
 
                                 <td style="text-align: center;">
                                     <div class="input-group">
+                                        @* This Helper Class Is Used to Display Raw HTML same as Saved into Text Area *@
                                         @Html.Raw(Model.HTMLContentList[i].html_content)
                                     </div>
                                 </td>
@@ -100,8 +101,7 @@
 {
     <script type="text/javascript">
         $(document).ready(function () {
-            // Initialize Editor
-            //$('.textarea-editor').wysihtml5();
+            // Initializing Summer NOte Rich Text Editor of Local Editor
             $('.textarea-editor').summernote(
                 {
                     height: 300,                 // set editor height
